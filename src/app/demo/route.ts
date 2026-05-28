@@ -36,7 +36,7 @@ export async function GET(request: Request) {
     type: "magiclink",
     email: DEMO_EMAIL,
     options: {
-      redirectTo: `${origin}/auth/callback?next=/onboarding%3Fdemo=1`,
+      redirectTo: `${origin}/auth/callback?next=/onboarding`,
     },
   });
 

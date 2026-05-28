@@ -48,7 +48,7 @@ export default async function TicketsAdminPage({
           </p>
         </div>
         <div className="flex gap-1 text-sm">
-          {(["open", "resolved"] as const).map((s) => (
+          {(["open", "needs_review", "resolved"] as const).map((s) => (
             <a
               key={s}
               href={`?status=${s}`}
@@ -85,9 +85,14 @@ export default async function TicketsAdminPage({
                         <pre className="bg-secondary/50 rounded p-2 mt-1 overflow-x-auto font-mono whitespace-pre-wrap">{t.element_html}</pre>
                       </details>
                     )}
+                    {t.resolved_note && (
+                      <div className="mt-3 text-xs rounded-md border border-amber-200 bg-amber-50/70 text-amber-900 px-2.5 py-1.5">
+                        <span className="font-semibold">Bot:</span> {t.resolved_note}
+                      </div>
+                    )}
                   </div>
                   <div className="shrink-0 flex flex-col gap-2 items-end">
-                    <Badge variant={t.status === "open" ? "default" : "secondary"}>{t.status}</Badge>
+                    <Badge variant={t.status === "open" ? "default" : t.status === "needs_review" ? "destructive" : "secondary"}>{t.status}</Badge>
                     {t.status === "open" ? (
                       <form action={resolveTicket}>
                         <input type="hidden" name="id" value={t.id} />

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SiteHeader } from "@/components/site-header";
-import { DemoBanner } from "@/components/demo-banner";
 import { TicketWidget } from "@/components/ticket-widget";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
@@ -19,7 +18,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        <DemoBanner />
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <footer className="border-t mt-12 py-6 text-center text-sm text-muted-foreground">

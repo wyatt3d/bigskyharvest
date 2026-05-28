@@ -9,4 +9,3 @@ export function createAdminClient() {
   );
 }
 
-export const DEMO_EMAIL = "demo@bigskyharvest.com";

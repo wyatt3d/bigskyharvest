@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createAdminClient, DEMO_EMAIL } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
 
@@ -31,18 +32,25 @@ export async function GET(request: Request) {
   await admin.from("jobs").delete().eq("farmer_id", userId);
   await admin.from("profiles").delete().eq("id", userId);
 
-  // Generate a magic link and redirect through it to establish a session
+  // Generate a magic link and verify its hashed_token server-side.
+  // This establishes the session in cookies on our domain directly,
+  // bypassing the implicit-flow fragment that the action_link returns.
   const { data: link, error: linkErr } = await admin.auth.admin.generateLink({
     type: "magiclink",
     email: DEMO_EMAIL,
-    options: {
-      redirectTo: `${origin}/auth/callback?next=/onboarding`,
-    },
   });
-
-  if (linkErr || !link?.properties?.action_link) {
+  if (linkErr || !link?.properties?.hashed_token) {
     return NextResponse.redirect(`${origin}/?demo_error=${encodeURIComponent(linkErr?.message ?? "link_failed")}`);
   }
 
-  return NextResponse.redirect(link.properties.action_link);
+  const supabase = await createClient();
+  const { error: verifyErr } = await supabase.auth.verifyOtp({
+    type: "magiclink",
+    token_hash: link.properties.hashed_token,
+  });
+  if (verifyErr) {
+    return NextResponse.redirect(`${origin}/?demo_error=${encodeURIComponent(verifyErr.message)}`);
+  }
+
+  return NextResponse.redirect(`${origin}/onboarding`);
 }

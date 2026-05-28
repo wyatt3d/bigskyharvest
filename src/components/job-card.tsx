@@ -65,7 +65,7 @@ export function JobCard({ job }: { job: Job }) {
               {job.title}
             </h3>
             {job.wage_text && (
-              <span className="shrink-0 text-sm font-semibold text-stone-900">{job.wage_text.split(/[+·,]/)[0].trim()}</span>
+              <span className="shrink-0 text-sm font-semibold text-stone-900">{job.wage_text.split(/[+·]/)[0].trim()}</span>
             )}
           </div>
           <p className="text-sm text-stone-500 mt-0.5">

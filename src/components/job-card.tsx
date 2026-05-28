@@ -2,15 +2,15 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import type { Job } from "@/lib/types";
 
-type Category = { key: string; label: string };
+type Category = { key: string; label: string; icon: string };
 
 const CATEGORIES: Category[] = [
-  { key: "wheat",   label: "Wheat / Grain" },
-  { key: "cattle",  label: "Cattle / Ranch" },
-  { key: "hay",     label: "Hay / Forage" },
-  { key: "calving", label: "Calving" },
-  { key: "orchard", label: "Orchard" },
-  { key: "general", label: "Farm hand" },
+  { key: "wheat",   label: "Wheat / Grain",  icon: "🌾" },
+  { key: "cattle",  label: "Cattle / Ranch", icon: "🐂" },
+  { key: "hay",     label: "Hay / Forage",   icon: "🌿" },
+  { key: "calving", label: "Calving",        icon: "🐄" },
+  { key: "orchard", label: "Orchard",        icon: "🍎" },
+  { key: "general", label: "Farm hand",      icon: "🚜" },
 ];
 
 export function categoryFor(job: Pick<Job, "title" | "description" | "equipment">): Category {
@@ -33,16 +33,6 @@ function fmtDateRange(start: string | null, end: string | null) {
   return null;
 }
 
-function PhotoIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden>
-      <rect x="3" y="5" width="18" height="14" rx="2" />
-      <circle cx="8.5" cy="10.5" r="1.5" />
-      <path d="m21 16-5-5L5 21" />
-    </svg>
-  );
-}
-
 export function JobCard({ job }: { job: Job }) {
   const cat = categoryFor(job);
   const dateRange = fmtDateRange(job.start_date, job.end_date);
@@ -52,7 +42,7 @@ export function JobCard({ job }: { job: Job }) {
       <article className="overflow-hidden rounded-2xl bg-background ring-1 ring-stone-200 hover:ring-stone-300 hover:-translate-y-0.5 transition-all duration-200 shadow-sm hover:shadow-md">
         <div className="relative aspect-[5/3] bg-gradient-to-br from-stone-100 via-stone-50 to-stone-100">
           <div className="absolute inset-0 flex items-center justify-center">
-            <PhotoIcon className="h-10 w-10 text-stone-300" />
+            <span className="text-6xl md:text-7xl drop-shadow-sm select-none" aria-hidden>{cat.icon}</span>
           </div>
           <div className="absolute top-3 left-3 bg-white/85 backdrop-blur text-stone-700 text-xs font-medium tracking-wide uppercase px-2.5 py-1 rounded-full border border-stone-200/60 shadow-sm">
             {cat.label}

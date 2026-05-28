@@ -165,7 +165,7 @@ export default async function Home() {
                 { t: "Apply, take the call", d: "One click sends your contact. Pack your truck. Earn money. Sleep well." },
               ]}
               cta={{ label: "Browse jobs", href: "/jobs" }}
-              accent
+              tinted
             />
           </div>
         </div>
@@ -326,33 +326,36 @@ function SideCard({
   h,
   steps,
   cta,
-  accent,
+  tinted,
 }: {
   tag: string;
   h: string;
   steps: { t: string; d: string }[];
   cta: { label: string; href: string };
-  accent?: boolean;
+  tinted?: boolean;
 }) {
+  const surface = tinted
+    ? "bg-amber-50/60 ring-1 ring-amber-200/70 shadow-sm"
+    : "bg-background ring-1 ring-stone-200 shadow-sm";
   return (
-    <div className={`rounded-3xl p-7 md:p-9 ${accent ? "bg-stone-900 text-white" : "bg-background ring-1 ring-stone-200 shadow-sm"}`}>
-      <p className={`text-xs font-semibold tracking-wider uppercase ${accent ? "text-amber-300" : "text-amber-700"}`}>{tag}</p>
-      <h2 className={`text-2xl md:text-3xl font-bold tracking-tight mt-2 ${accent ? "text-white" : "text-stone-900"}`}>{h}</h2>
+    <div className={`rounded-3xl p-7 md:p-9 ${surface}`}>
+      <p className="text-xs font-semibold tracking-wider uppercase text-amber-700">{tag}</p>
+      <h2 className="text-2xl md:text-3xl font-bold tracking-tight mt-2 text-stone-900">{h}</h2>
       <ol className="mt-6 space-y-5">
         {steps.map((s, i) => (
           <li key={i} className="flex gap-4">
-            <div className={`shrink-0 h-8 w-8 rounded-full font-semibold flex items-center justify-center text-sm ${accent ? "bg-amber-300 text-amber-950" : "bg-amber-100 text-amber-900"}`}>
+            <div className="shrink-0 h-8 w-8 rounded-full font-semibold flex items-center justify-center text-sm bg-amber-100 text-amber-900">
               {i + 1}
             </div>
             <div>
-              <p className={`font-semibold ${accent ? "text-white" : "text-stone-900"}`}>{s.t}</p>
-              <p className={`text-sm mt-0.5 ${accent ? "text-white/70" : "text-stone-600"}`}>{s.d}</p>
+              <p className="font-semibold text-stone-900">{s.t}</p>
+              <p className="text-sm mt-0.5 text-stone-600">{s.d}</p>
             </div>
           </li>
         ))}
       </ol>
       <Link href={cta.href} className="inline-block mt-7">
-        <Button className={accent ? "bg-amber-400 hover:bg-amber-300 text-amber-950 rounded-full" : "rounded-full"}>
+        <Button className="rounded-full">
           {cta.label} →
         </Button>
       </Link>

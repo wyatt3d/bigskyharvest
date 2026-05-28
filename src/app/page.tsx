@@ -259,7 +259,7 @@ export default async function Home() {
                 Both of these people exist. They don&rsquo;t know each other.
                 <span className="text-stone-900 font-semibold"> They should.</span>
               </p>
-              <p className="text-sm text-stone-500 pt-2">— Brian &amp; Wyatt, founders</p>
+              <p className="text-sm text-stone-500 pt-2">— Brian Seidensticker, founder</p>
             </div>
           </div>
         </div>

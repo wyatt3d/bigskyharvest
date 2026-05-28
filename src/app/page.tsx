@@ -7,6 +7,16 @@ import type { Job } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
+const CATEGORIES = [
+  { label: "All", q: "", icon: "✦" },
+  { label: "Wheat", q: "wheat", icon: "🌾" },
+  { label: "Cattle", q: "cattle", icon: "🐂" },
+  { label: "Hay", q: "hay", icon: "🌿" },
+  { label: "Calving", q: "calving", icon: "🐄" },
+  { label: "Orchard", q: "orchard", icon: "🍎" },
+  { label: "Ranch", q: "ranch", icon: "🚜" },
+];
+
 export default async function Home() {
   const supabase = await createClient();
   const { data: recent } = await supabase
@@ -24,168 +34,209 @@ export default async function Home() {
   return (
     <div>
       {/* HERO */}
-      <section className="relative isolate overflow-hidden border-b">
+      <section className="relative isolate overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=2400&q=80"
-          alt="Wheat field at sunset"
+          alt=""
           fill
           priority
           className="object-cover -z-10"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30 -z-10" />
-        <div className="mx-auto max-w-7xl px-6 py-24 md:py-32 text-white">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs font-medium tracking-wide uppercase">
-            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
-            Built in Montana · Open to the U.S.
-          </div>
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight mt-5 max-w-3xl text-balance">
-            The hiring platform for American agriculture.
-          </h1>
-          <p className="text-lg md:text-xl mt-5 max-w-2xl text-white/85">
-            BigSkyHarvest connects farms and ranches with seasonal workers ready
-            to live and work the land. Post a job in three minutes — or browse{" "}
-            {openCount ? <span className="font-semibold text-amber-300">{openCount} open positions</span> : "open positions"} across Montana.
-          </p>
-          <div className="flex flex-wrap gap-3 mt-8">
-            <Link href="/jobs/new">
-              <Button size="lg" className="bg-amber-500 hover:bg-amber-400 text-amber-950">Post a job — free</Button>
-            </Link>
-            <Link href="/jobs">
-              <Button size="lg" variant="outline" className="bg-white/10 border-white/30 text-white hover:bg-white/20 hover:text-white">
-                Find harvest work
-              </Button>
-            </Link>
-            <Link href="/demo">
-              <Button size="lg" variant="ghost" className="text-white hover:bg-white/10 hover:text-white">
-                Try the demo →
-              </Button>
-            </Link>
-          </div>
-          <p className="text-xs text-white/60 mt-4">
-            Free for farmers. Free for workers. No ads, no résumés.
-          </p>
-        </div>
-      </section>
+        <div className="absolute inset-0 bg-gradient-to-b from-stone-950/70 via-stone-950/40 to-stone-950/80 -z-10" />
 
-      {/* THE LABOR GAP */}
-      <section className="border-b bg-stone-50">
-        <div className="mx-auto max-w-7xl px-6 py-14">
-          <div className="grid md:grid-cols-12 gap-8 items-start">
-            <div className="md:col-span-4">
-              <p className="text-xs font-semibold tracking-wider uppercase text-amber-700">The labor gap</p>
-              <h2 className="text-3xl font-bold tracking-tight mt-2">
-                American agriculture is short on hands.
-              </h2>
-              <p className="text-muted-foreground mt-4">
-                The seasonal labor shortage isn&rsquo;t a soft trend. It&rsquo;s the
-                single biggest constraint on Western U.S. farms today —
-                and growing every harvest.
-              </p>
+        <div className="mx-auto max-w-7xl px-6 pt-24 md:pt-32 pb-12 text-white">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 rounded-full backdrop-blur-md bg-white/10 border border-white/20 px-3 py-1 text-xs font-medium tracking-wide uppercase">
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+              Built in Montana · For the U.S.
             </div>
-            <div className="md:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <Stat n="57.5" unit="years" label="Average age of the U.S. farmer" sub="USDA Census of Agriculture" />
-              <Stat n="~50%" unit="" label="of U.S. farms report unfilled seasonal labor" sub="USDA & industry surveys" />
-              <Stat n="$3B+" unit="" label="estimated annual revenue lost to unharvested crops" sub="Multiple ag economic studies" />
+            <h1 className="mt-5 text-5xl md:text-7xl font-bold tracking-tight text-balance leading-[1.05]">
+              The way America hires its harvest.
+            </h1>
+            <p className="mt-5 text-lg md:text-xl text-white/85 max-w-2xl">
+              Connecting farms and ranches with seasonal workers ready to live
+              and work the land. List a job in three minutes — or take a season
+              you&rsquo;ll talk about for the rest of your life.
+            </p>
+          </div>
+
+          {/* Frosted-glass action card */}
+          <div className="mt-10 max-w-5xl">
+            <div className="backdrop-blur-2xl bg-white/10 border border-white/20 rounded-3xl p-3 md:p-4 shadow-2xl">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-stretch">
+                <Link
+                  href="/jobs"
+                  className="md:col-span-5 group flex items-center gap-4 rounded-2xl bg-white/10 hover:bg-white/20 transition-colors p-4 border border-white/10"
+                >
+                  <div className="h-11 w-11 shrink-0 rounded-full bg-amber-400/20 backdrop-blur border border-amber-300/30 flex items-center justify-center">
+                    <span className="text-xl">🔍</span>
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wider text-white/60">I&rsquo;m looking for work</p>
+                    <p className="text-base font-semibold">Browse {openCount ?? ""} open positions →</p>
+                  </div>
+                </Link>
+                <Link
+                  href="/jobs/new"
+                  className="md:col-span-5 group flex items-center gap-4 rounded-2xl bg-white/10 hover:bg-white/20 transition-colors p-4 border border-white/10"
+                >
+                  <div className="h-11 w-11 shrink-0 rounded-full bg-amber-400/20 backdrop-blur border border-amber-300/30 flex items-center justify-center">
+                    <span className="text-xl">🚜</span>
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wider text-white/60">I need hands</p>
+                    <p className="text-base font-semibold">Post a job — free →</p>
+                  </div>
+                </Link>
+                <Link
+                  href="/demo"
+                  className="md:col-span-2 flex items-center justify-center rounded-2xl bg-amber-500 hover:bg-amber-400 text-amber-950 transition-colors p-4 font-semibold text-sm"
+                >
+                  Try the demo
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* HOW IT WORKS — TWO COLUMN */}
-      <section className="border-b">
-        <div className="mx-auto max-w-7xl px-6 py-16">
-          <div className="grid md:grid-cols-2 gap-10">
-            <div>
-              <p className="text-xs font-semibold tracking-wider uppercase text-amber-700">For farmers &amp; ranchers</p>
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight mt-2">
-                A full crew, without the cold calls.
-              </h2>
-              <ol className="mt-6 space-y-5">
-                <StepRow n="1" t="Describe the work" d="Title, dates, pay, housing, what they'll operate. We wrote the questions. You answer five." />
-                <StepRow n="2" t="Reach the right candidates" d="Your listing surfaces to workers actively looking for harvest, ranch, and seasonal ag roles." />
-                <StepRow n="3" t="Interview and hire" d="Applicants come through with phone, email, and a short note. Call the ones that fit." />
-              </ol>
-              <Link href="/jobs/new" className="inline-block mt-7">
-                <Button>Post a job</Button>
+          {/* Category chips */}
+          <div className="mt-8 flex flex-wrap gap-2">
+            {CATEGORIES.map((c) => (
+              <Link
+                key={c.label}
+                href={c.q ? `/jobs?q=${c.q}` : "/jobs"}
+                className="inline-flex items-center gap-1.5 rounded-full backdrop-blur-md bg-white/10 hover:bg-white/20 border border-white/20 px-3.5 py-1.5 text-sm transition-colors"
+              >
+                <span aria-hidden>{c.icon}</span>
+                {c.label}
               </Link>
-            </div>
+            ))}
+          </div>
+        </div>
 
-            <div className="md:border-l md:pl-10">
-              <p className="text-xs font-semibold tracking-wider uppercase text-amber-700">For seasonal workers</p>
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight mt-2">
-                Real work, real places, real seasons.
-              </h2>
-              <ol className="mt-6 space-y-5">
-                <StepRow n="1" t="Build a quick profile" d="Skills, availability, equipment experience. Two minutes. No résumé." />
-                <StepRow n="2" t="Browse open positions" d="Combine operators, swathers, calving hands, ranch hands, cattle-drive crews." />
-                <StepRow n="3" t="Apply directly" d="One click sends your contact and a short pitch to the farmer. Take the call." />
-              </ol>
-              <Link href="/jobs" className="inline-block mt-7">
-                <Button variant="outline">Browse jobs</Button>
-              </Link>
+        {/* Trust strip — frosted band at bottom of hero */}
+        <div className="relative">
+          <div className="absolute inset-x-0 bottom-0 backdrop-blur-xl bg-white/10 border-t border-white/15">
+            <div className="mx-auto max-w-7xl px-6 py-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-xs md:text-sm text-white/90">
+              <Trust k="Free" v="for workers, always" />
+              <Trust k="Free" v="to post jobs" />
+              <Trust k="No résumés" v="just real conversations" />
+              <Trust k="MT-first" v="rolling out nationally" />
             </div>
           </div>
+          <div className="h-24" />
         </div>
       </section>
 
-      {/* OPEN ROLES */}
+      {/* FEATURED JOBS */}
       {recent && recent.length > 0 && (
-        <section className="border-b bg-stone-50">
+        <section className="border-b border-stone-200">
           <div className="mx-auto max-w-7xl px-6 py-16">
             <div className="flex flex-wrap items-end justify-between gap-3 mb-6">
               <div>
-                <p className="text-xs font-semibold tracking-wider uppercase text-amber-700">Currently hiring</p>
-                <h2 className="text-3xl font-bold tracking-tight mt-2">Open positions</h2>
+                <p className="text-xs font-semibold tracking-wider uppercase text-amber-700">Open this season</p>
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight mt-2">Live the land.</h2>
+                <p className="text-stone-600 mt-2">Real jobs from real farms across Montana.</p>
               </div>
-              <Link href="/jobs" className="text-sm font-medium hover:underline">
+              <Link href="/jobs" className="text-sm font-semibold hover:text-amber-700">
                 View all {openCount ?? ""} →
               </Link>
             </div>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {(recent as Job[]).map((j) => <JobCard key={j.id} job={j} />)}
             </div>
           </div>
         </section>
       )}
 
-      {/* PRICING + GUARANTEE */}
-      <section className="border-b">
-        <div className="mx-auto max-w-7xl px-6 py-16">
-          <div className="grid md:grid-cols-2 gap-12 items-start">
-            <div>
-              <p className="text-xs font-semibold tracking-wider uppercase text-amber-700">Pricing</p>
-              <h2 className="text-3xl font-bold tracking-tight mt-2">Free during launch.</h2>
-              <p className="text-muted-foreground mt-4 max-w-md">
-                Posting a job is free. Applying for a job is free. We&rsquo;ll never
-                charge workers. If we charge farmers in the future, it will
-                be a flat per-job fee — announced 60 days in advance, capped,
-                and only after the platform has measurably reduced your time-to-hire.
+      {/* HOW IT WORKS — TWO COLUMN */}
+      <section className="border-b border-stone-200 bg-stone-100/60">
+        <div className="mx-auto max-w-7xl px-6 py-20">
+          <div className="grid md:grid-cols-2 gap-10 lg:gap-16">
+            <SideCard
+              tag="For hosts"
+              h="A full crew, without the cold calls."
+              steps={[
+                { t: "List the work", d: "Title, dates, pay, housing, what they'll operate. Five questions, three minutes." },
+                { t: "Receive applicants", d: "Qualified workers reach out within days. With names and phone numbers." },
+                { t: "Hire who fits", d: "Call the ones that match. The platform stays out of the way." },
+              ]}
+              cta={{ label: "Host a job", href: "/jobs/new" }}
+            />
+            <SideCard
+              tag="For workers"
+              h="Real work, real places, real seasons."
+              steps={[
+                { t: "Build a profile", d: "Skills, availability, experience. No résumé." },
+                { t: "Browse the land", d: "Combine, hay, calving, cattle, orchard. Filter by region or season." },
+                { t: "Apply, take the call", d: "One click sends your contact. Pack your truck. Earn money. Sleep well." },
+              ]}
+              cta={{ label: "Browse jobs", href: "/jobs" }}
+              accent
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* LABOR GAP */}
+      <section className="border-b border-stone-200">
+        <div className="mx-auto max-w-7xl px-6 py-20">
+          <div className="grid md:grid-cols-12 gap-10 items-start">
+            <div className="md:col-span-5">
+              <p className="text-xs font-semibold tracking-wider uppercase text-amber-700">The labor gap</p>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight mt-2 max-w-md">
+                The fields are ready. The hands aren&rsquo;t showing up.
+              </h2>
+              <p className="text-stone-600 mt-4 max-w-md">
+                Western farms face the tightest labor market in a generation.
+                Meanwhile, a generation of city workers would trade their inbox
+                for an open cab and a thermos. We built the bridge.
               </p>
-              <ul className="mt-6 space-y-2 text-sm">
-                <CheckLi>Unlimited job postings</CheckLi>
-                <CheckLi>Unlimited applications</CheckLi>
-                <CheckLi>No ads, no data sales</CheckLi>
-                <CheckLi>No résumés, no scoring algorithms</CheckLi>
+            </div>
+            <div className="md:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <StatTile n="57.5" unit="yrs" label="Average U.S. farmer age" src="USDA Census of Agriculture" />
+              <StatTile n="~50%" unit="" label="of farms reporting unfilled seasonal labor" src="USDA & industry surveys" />
+              <StatTile n="$3B+" unit="" label="estimated annual U.S. revenue lost to unharvested crops" src="Multiple economic studies" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* COMMITMENT */}
+      <section className="border-b border-stone-200 bg-stone-100/60">
+        <div className="mx-auto max-w-7xl px-6 py-20">
+          <div className="grid md:grid-cols-2 gap-10">
+            <div>
+              <p className="text-xs font-semibold tracking-wider uppercase text-amber-700">Our pricing</p>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight mt-2">Free during launch. Honest forever.</h2>
+              <p className="text-stone-600 mt-4 max-w-md">
+                Posting and applying are free today, and free for workers always.
+                If we ever charge farms, it will be a flat per-job fee announced
+                60 days in advance — and only after the platform has measurably
+                cut your time-to-hire.
+              </p>
+              <ul className="mt-6 space-y-2.5 text-sm">
+                <CheckLi>Unlimited postings and applications</CheckLi>
+                <CheckLi>No ads on listings, ever</CheckLi>
+                <CheckLi>No data sales, no résumé scoring</CheckLi>
+                <CheckLi>Cancel a posting in one click</CheckLi>
               </ul>
             </div>
 
-            <div className="border rounded-lg p-6 bg-stone-50">
+            <div className="backdrop-blur-xl bg-white/60 border border-stone-200 rounded-3xl p-7 shadow-sm">
               <p className="text-xs font-semibold tracking-wider uppercase text-amber-700">Our commitment</p>
-              <div className="mt-3 space-y-5">
+              <div className="mt-3 space-y-6">
                 <div>
-                  <p className="font-semibold">To farmers</p>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Post a job. If you don&rsquo;t receive at least three qualified
-                    applicants within 14 days, our team will hand-source
-                    candidates for you at no cost.
+                  <p className="font-semibold text-lg">To hosts</p>
+                  <p className="text-stone-600 mt-1.5">
+                    Post a job. If you don&rsquo;t receive three qualified applicants
+                    within 14 days, our team hand-sources candidates at no cost.
                   </p>
                 </div>
-                <div className="border-t pt-5">
-                  <p className="font-semibold">To workers</p>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    If a farmer cancels on you after you&rsquo;ve traveled, we&rsquo;ll
-                    cover reasonable return travel or place you in a comparable
-                    open role.
+                <div className="border-t border-stone-200 pt-6">
+                  <p className="font-semibold text-lg">To workers</p>
+                  <p className="text-stone-600 mt-1.5">
+                    If a farm cancels after you&rsquo;ve travelled, we&rsquo;ll cover
+                    reasonable return travel or place you in a comparable open role.
                   </p>
                 </div>
               </div>
@@ -195,54 +246,60 @@ export default async function Home() {
       </section>
 
       {/* FOUNDER NOTE */}
-      <section className="border-b bg-stone-50">
-        <div className="mx-auto max-w-7xl px-6 py-16">
+      <section className="border-b border-stone-200">
+        <div className="mx-auto max-w-7xl px-6 py-20">
           <div className="grid md:grid-cols-12 gap-8">
             <div className="md:col-span-4">
               <p className="text-xs font-semibold tracking-wider uppercase text-amber-700">Why this exists</p>
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight mt-2">
+              <h2 className="text-3xl font-bold tracking-tight mt-2">
                 Two groups who should know each other.
               </h2>
             </div>
-            <div className="md:col-span-8 space-y-4 text-lg leading-relaxed">
+            <div className="md:col-span-8 space-y-4 text-lg leading-relaxed text-stone-700">
               <p>
                 A 4,000-acre wheat operation in central Montana can&rsquo;t run on
                 YouTube tutorials. A 28-year-old in Atlanta won&rsquo;t keep doing
                 6 a.m. Zoom standups for the next forty years.
               </p>
               <p>
-                Both of these people exist. They don&rsquo;t know each other.{" "}
-                <span className="font-semibold">They should.</span>
+                Both of these people exist. They don&rsquo;t know each other.
+                <span className="text-stone-900 font-semibold"> They should.</span>
               </p>
-              <p className="text-sm text-muted-foreground pt-2">— Brian &amp; Wyatt, founders</p>
+              <p className="text-sm text-stone-500 pt-2">— Brian &amp; Wyatt, founders</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* FINAL CTA */}
-      <section className="bg-stone-900 text-white">
-        <div className="mx-auto max-w-7xl px-6 py-20 grid md:grid-cols-2 gap-10 items-center">
-          <div>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
-              The harvest window is short.
-            </h2>
-            <p className="text-stone-300 mt-4 text-lg max-w-md">
-              Whether you&rsquo;re hiring or looking for the summer of your life,
-              the first step takes three minutes.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-3 md:justify-end">
+      <section className="relative isolate overflow-hidden bg-stone-950 text-white">
+        <Image
+          src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=2400&q=80"
+          alt=""
+          fill
+          className="object-cover opacity-30 -z-10"
+        />
+        <div className="mx-auto max-w-7xl px-6 py-24 text-center">
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tight max-w-3xl mx-auto">
+            The harvest window is short.
+          </h2>
+          <p className="text-stone-300 mt-5 text-lg max-w-2xl mx-auto">
+            Whether you&rsquo;re hiring or chasing the summer of your life, the
+            first step takes three minutes.
+          </p>
+          <div className="flex flex-wrap gap-3 justify-center mt-10">
             <Link href="/jobs/new">
-              <Button size="lg" className="bg-amber-500 hover:bg-amber-400 text-amber-950">Post a job</Button>
+              <Button size="lg" className="bg-amber-500 hover:bg-amber-400 text-amber-950 rounded-full">
+                Post a job
+              </Button>
             </Link>
             <Link href="/jobs">
-              <Button size="lg" variant="outline" className="bg-transparent border-white/30 text-white hover:bg-white/10 hover:text-white">
+              <Button size="lg" variant="outline" className="bg-white/10 backdrop-blur border-white/30 text-white hover:bg-white/20 hover:text-white rounded-full">
                 Find work
               </Button>
             </Link>
             <Link href="/demo">
-              <Button size="lg" variant="ghost" className="text-white hover:bg-white/10 hover:text-white">
+              <Button size="lg" variant="ghost" className="text-white hover:bg-white/10 hover:text-white rounded-full">
                 Try the demo
               </Button>
             </Link>
@@ -253,40 +310,74 @@ export default async function Home() {
   );
 }
 
-function Stat({ n, unit, label, sub }: { n: string; unit?: string; label: string; sub?: string }) {
+function Trust({ k, v }: { k: string; v: string }) {
   return (
-    <div className="border bg-background rounded-lg p-5">
-      <div className="flex items-baseline gap-1">
-        <span className="text-4xl md:text-5xl font-bold tracking-tight">{n}</span>
-        {unit && <span className="text-lg font-medium text-muted-foreground">{unit}</span>}
-      </div>
-      <p className="text-sm font-medium mt-2">{label}</p>
-      {sub && <p className="text-xs text-muted-foreground mt-1">{sub}</p>}
+    <div>
+      <p className="font-semibold">{k}</p>
+      <p className="text-white/70">{v}</p>
     </div>
   );
 }
 
-function StepRow({ n, t, d }: { n: string; t: string; d: string }) {
+function StatTile({ n, unit, label, src }: { n: string; unit?: string; label: string; src?: string }) {
   return (
-    <li className="flex gap-4">
-      <div className="shrink-0 h-8 w-8 rounded-full bg-amber-100 text-amber-900 font-semibold flex items-center justify-center text-sm">
-        {n}
+    <div className="rounded-2xl bg-stone-100/60 backdrop-blur border border-stone-200 p-5">
+      <div className="flex items-baseline gap-1">
+        <span className="text-4xl md:text-5xl font-bold tracking-tight text-stone-900">{n}</span>
+        {unit && <span className="text-base font-medium text-stone-500">{unit}</span>}
       </div>
-      <div>
-        <p className="font-semibold">{t}</p>
-        <p className="text-sm text-muted-foreground mt-0.5">{d}</p>
-      </div>
-    </li>
+      <p className="text-sm font-medium text-stone-700 mt-2">{label}</p>
+      {src && <p className="text-xs text-stone-500 mt-1">{src}</p>}
+    </div>
+  );
+}
+
+function SideCard({
+  tag,
+  h,
+  steps,
+  cta,
+  accent,
+}: {
+  tag: string;
+  h: string;
+  steps: { t: string; d: string }[];
+  cta: { label: string; href: string };
+  accent?: boolean;
+}) {
+  return (
+    <div className={`rounded-3xl p-7 md:p-9 ${accent ? "bg-stone-900 text-white" : "bg-background ring-1 ring-stone-200 shadow-sm"}`}>
+      <p className={`text-xs font-semibold tracking-wider uppercase ${accent ? "text-amber-300" : "text-amber-700"}`}>{tag}</p>
+      <h2 className={`text-2xl md:text-3xl font-bold tracking-tight mt-2 ${accent ? "text-white" : "text-stone-900"}`}>{h}</h2>
+      <ol className="mt-6 space-y-5">
+        {steps.map((s, i) => (
+          <li key={i} className="flex gap-4">
+            <div className={`shrink-0 h-8 w-8 rounded-full font-semibold flex items-center justify-center text-sm ${accent ? "bg-amber-300 text-amber-950" : "bg-amber-100 text-amber-900"}`}>
+              {i + 1}
+            </div>
+            <div>
+              <p className={`font-semibold ${accent ? "text-white" : "text-stone-900"}`}>{s.t}</p>
+              <p className={`text-sm mt-0.5 ${accent ? "text-white/70" : "text-stone-600"}`}>{s.d}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <Link href={cta.href} className="inline-block mt-7">
+        <Button className={accent ? "bg-amber-400 hover:bg-amber-300 text-amber-950 rounded-full" : "rounded-full"}>
+          {cta.label} →
+        </Button>
+      </Link>
+    </div>
   );
 }
 
 function CheckLi({ children }: { children: React.ReactNode }) {
   return (
-    <li className="flex items-start gap-2">
+    <li className="flex items-start gap-2.5">
       <svg className="h-5 w-5 shrink-0 text-amber-600 mt-0.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
         <path fillRule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 011.4-1.4L8.5 12 15.3 5.3a1 1 0 011.4 0z" clipRule="evenodd" />
       </svg>
-      <span>{children}</span>
+      <span className="text-stone-700">{children}</span>
     </li>
   );
 }

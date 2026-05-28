@@ -22,31 +22,31 @@ export async function SiteHeader() {
   const { data: { user } } = await supabase.auth.getUser();
 
   return (
-    <header className="border-b bg-background/95 backdrop-blur sticky top-0 z-30">
+    <header className="sticky top-0 z-30 backdrop-blur-xl bg-background/70 border-b border-stone-200/60">
       <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight text-base">
           <WheatMark className="h-5 w-5 text-amber-600" />
           BigSkyHarvest
         </Link>
         <nav className="flex items-center gap-1 md:gap-2 text-sm">
-          <Link href="/jobs" className="px-3 py-2 text-muted-foreground hover:text-foreground rounded-md">
-            Jobs
+          <Link href="/jobs" className="px-3 py-2 text-stone-600 hover:text-stone-900 rounded-full">
+            Browse
           </Link>
-          <Link href="/jobs/new" className="px-3 py-2 text-muted-foreground hover:text-foreground rounded-md hidden sm:inline">
-            Post a job
+          <Link href="/jobs/new" className="px-3 py-2 text-stone-600 hover:text-stone-900 rounded-full hidden sm:inline">
+            Host a job
           </Link>
           {user ? (
             <>
-              <Link href="/dashboard" className="px-3 py-2 text-muted-foreground hover:text-foreground rounded-md">
+              <Link href="/dashboard" className="px-3 py-2 text-stone-600 hover:text-stone-900 rounded-full">
                 Dashboard
               </Link>
               <form action={signOut}>
-                <Button variant="ghost" size="sm" type="submit">Sign out</Button>
+                <Button variant="ghost" size="sm" type="submit" className="rounded-full">Sign out</Button>
               </form>
             </>
           ) : (
             <Link href="/login">
-              <Button size="sm">Sign in</Button>
+              <Button size="sm" className="rounded-full">Sign in</Button>
             </Link>
           )}
         </nav>

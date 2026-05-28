@@ -61,12 +61,12 @@ export default async function Home() {
           </div>
 
           {/* Frosted-glass action card */}
-          <div className="mt-10 max-w-5xl">
+          <div className="mt-10 max-w-4xl">
             <div className="backdrop-blur-2xl bg-white/10 border border-white/20 rounded-3xl p-3 md:p-4 shadow-2xl">
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-stretch">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-stretch">
                 <Link
                   href="/jobs"
-                  className="md:col-span-5 group flex items-center gap-4 rounded-2xl bg-white/10 hover:bg-white/20 transition-colors p-4 border border-white/10"
+                  className="group flex items-center gap-4 rounded-2xl bg-white/10 hover:bg-white/20 transition-colors p-4 border border-white/10"
                 >
                   <div className="h-11 w-11 shrink-0 rounded-full bg-amber-400/20 backdrop-blur border border-amber-300/30 flex items-center justify-center">
                     <span className="text-xl">🔍</span>
@@ -78,21 +78,15 @@ export default async function Home() {
                 </Link>
                 <Link
                   href="/jobs/new"
-                  className="md:col-span-5 group flex items-center gap-4 rounded-2xl bg-white/10 hover:bg-white/20 transition-colors p-4 border border-white/10"
+                  className="group flex items-center gap-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-amber-950 transition-colors p-4 border border-amber-300/30"
                 >
-                  <div className="h-11 w-11 shrink-0 rounded-full bg-amber-400/20 backdrop-blur border border-amber-300/30 flex items-center justify-center">
+                  <div className="h-11 w-11 shrink-0 rounded-full bg-amber-950/15 border border-amber-950/20 flex items-center justify-center">
                     <span className="text-xl">🚜</span>
                   </div>
                   <div>
-                    <p className="text-xs uppercase tracking-wider text-white/60">I need hands</p>
+                    <p className="text-xs uppercase tracking-wider text-amber-950/70">I need hands</p>
                     <p className="text-base font-semibold">Post a job — free →</p>
                   </div>
-                </Link>
-                <Link
-                  href="/demo"
-                  className="md:col-span-2 flex items-center justify-center rounded-2xl bg-amber-500 hover:bg-amber-400 text-amber-950 transition-colors p-4 font-semibold text-sm"
-                >
-                  Try the demo
                 </Link>
               </div>
             </div>
@@ -296,11 +290,6 @@ export default async function Home() {
             <Link href="/jobs">
               <Button size="lg" variant="outline" className="bg-white/10 backdrop-blur border-white/30 text-white hover:bg-white/20 hover:text-white rounded-full">
                 Find work
-              </Button>
-            </Link>
-            <Link href="/demo">
-              <Button size="lg" variant="ghost" className="text-white hover:bg-white/10 hover:text-white rounded-full">
-                Try the demo
               </Button>
             </Link>
           </div>
